@@ -21,9 +21,18 @@ stages:
       vmImage: 'windows-2019'
     steps:
     - task: Docker@2
+      displayName: Restore and Build Code
+      inputs:
+        command: build
+        dockerfile: '$(Build.SourcesDirectory)/WebAppWindowsContainer/DockerComposeFile'
+        tags: |
+          $(tag)
+    - task: Docker@2
       displayName: Build an image
       inputs:
         command: build
         dockerfile: '$(Build.SourcesDirectory)/WebAppWindowsContainer/Dockerfile'
         tags: |
           $(tag)
+
+    
